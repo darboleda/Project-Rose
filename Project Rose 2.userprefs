@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Canal/Rose/Unity/Editor/RailEditor.cs">
+    <Files>
+      <File FileName="Assets/Canal/Rose/Unity/Engine/Rail.cs" Line="9" Column="1" />
+      <File FileName="Assets/Canal/Unity/BezierPath.cs" Line="104" Column="32" />
+      <File FileName="Assets/Canal/Unity/BezierPoint.cs" Line="14" Column="26" />
+      <File FileName="Assets/Canal/Rose/Unity/Editor/RailEditor.cs" Line="35" Column="36" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
