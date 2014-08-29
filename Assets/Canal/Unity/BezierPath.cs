@@ -8,6 +8,39 @@ namespace Canal.Unity
     [ExecuteInEditMode]
     public class BezierPath : Behavior
     {
+		public struct BezierCurve
+		{
+			public BezierPoint EntryPoint;
+			public BezierPoint ExitPoint;
+
+			public BezierCurve(BezierPoint entry, BezierPoint exit)
+			{
+				this.EntryPoint = entry;
+				this.ExitPoint = exit;
+			}
+
+			public Vector3 Sample(float t)
+			{
+				float tIn = 1 - t;
+				Vector3 p0, p1, p2, p3;
+				p0 = this.EntryPoint.Position;
+				p1 = this.EntryPoint.ExitTangent;
+				p2 = this.ExitPoint.EntryTangent;
+				p3 = this.ExitPoint.Position;
+
+                if (t <= 0) return p0;
+                if (t >= 1) return p3;
+
+				float tInSq = tIn * tIn;
+				float tSq = t * t;
+
+				return ((tInSq * tIn) * p0)
+					    + ((3 * tInSq * t) * p1)
+					    + ((3 * tIn * tSq) * p2)
+						+ ((tSq * t) * p3);
+			}
+		}
+
         public interface IBezierPointCollection
         {
             int Count { get; }
@@ -59,6 +92,20 @@ namespace Canal.Unity
         {
             pointCollection = pointCollection ?? new BezierPointCollection(this);
         }
+
+		public int CurveCount
+		{
+			get { return (this.points.Count > 0 ? this.points.Count - 1 : 0); }
+		}
+
+		public BezierCurve GetCurve(int curveIndex)
+		{
+			if(curveIndex >= 0 && curveIndex < CurveCount)
+			{
+				return new BezierCurve(this.points[curveIndex], this.points[curveIndex + 1]);
+			}
+			return default(BezierCurve);
+		}
 
         public void Extend()
         {

@@ -11,6 +11,12 @@ namespace Canal.Unity
         [SerializeField] private Vector3 entryTangent;
         [SerializeField] private Vector3 exitTangent;
 
+		public Vector3 Position
+		{
+			get { return transform.position; }
+			set { transform.position = value; }
+		}
+
         public Vector3 EntryTangent
         {
             get { return transform.TransformPoint(entryTangent); }
@@ -37,6 +43,11 @@ namespace Canal.Unity
                     entryTangent = -entryTangent.magnitude * exitTangent.normalized;
                 }
             }
+        }
+
+        public void ResetTangents()
+        {
+            entryTangent = exitTangent = Vector3.zero;
         }
     }
 }

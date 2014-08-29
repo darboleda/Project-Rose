@@ -9,11 +9,17 @@ namespace Canal.Unity.Editor
     [CustomEditor(typeof(BezierPath))]
     public class BezierPathEditor : UnityEditor.Editor
     {
+        private static bool enableTangentDrag = true;
+
         public BezierPoint selectedPoint = null;
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
             BezierPath path = target as BezierPath;
+            if(path == null) return;
+
+            enableTangentDrag = EditorGUILayout.Toggle("Enable tangent drag", enableTangentDrag);
+
             if (path.Points.Count > 0)
             {
                 BezierPoint pointToRemove = null;
@@ -118,7 +124,7 @@ namespace Canal.Unity.Editor
             Handles.DrawSolidDisc(position, direction, size * 0.05f);
             if (selected)
             {
-                newPosition = PositionHandle(position);
+                newPosition = PositionHandle(position, true);
                 if (position != newPosition)
                 {
                     Undo.RecordObject(point, "Move point");
@@ -134,7 +140,7 @@ namespace Canal.Unity.Editor
             Handles.DrawBezier(pointPos, position, pointPos, position, Color.white, null, 2f);
 
             size = HandleUtility.GetHandleSize(position);
-            newPosition = PositionHandle(position);
+            newPosition = PositionHandle(position, enableTangentDrag);
             if (position != newPosition)
             {
                 Undo.RecordObject(point, "Move Tangent");
@@ -146,7 +152,7 @@ namespace Canal.Unity.Editor
             Handles.DrawBezier(pointPos, position, pointPos, position, Color.white, null, 2f);
 
             size = HandleUtility.GetHandleSize(position);
-            newPosition = PositionHandle(position);
+            newPosition = PositionHandle(position, enableTangentDrag);
             if (position != newPosition)
             {
                 Undo.RecordObject(point, "Move Tangent");
@@ -169,15 +175,29 @@ namespace Canal.Unity.Editor
             shouldRemove = GUILayout.Button("Delete Point");
             shouldAddAfter = GUILayout.Button("Split After");
 
+            if(GUILayout.Button("Reset Tangents"))
+            {
+                point.ResetTangents();
+                SceneView.RepaintAll();
+            }
+
             GUILayout.EndHorizontal();
         }
 
-        private Vector3 PositionHandle(Vector3 position)
+        private Vector3 PositionHandle(Vector3 position, bool enableDrag)
         {
             Quaternion cameraRotation = SceneView.currentDrawingSceneView.camera.transform.rotation;
             float size = HandleUtility.GetHandleSize(position);
             Vector3 direction = cameraRotation * Vector3.back;
-            return Handles.Slider2D(position, direction, cameraRotation * Vector3.up, cameraRotation * Vector3.right, size * 0.05f, Handles.RectangleCap, size * 0.001f);
+            if(enableDrag)
+            {
+                return Handles.Slider2D(position, direction, cameraRotation * Vector3.up, cameraRotation * Vector3.right, size * 0.05f, Handles.RectangleCap, size * 0.001f);
+            }
+            else
+            {
+                Handles.RectangleCap(0, position, Quaternion.FromToRotation(Vector3.back, direction), size * 0.05f);
+                return position;
+            }
         }
 
         private bool BezierPointSelector(Vector3 position)
