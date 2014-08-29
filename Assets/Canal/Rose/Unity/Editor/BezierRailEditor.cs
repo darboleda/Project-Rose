@@ -8,13 +8,13 @@ using Canal.Rose.Unity.Engine;
 
 namespace Canal.Rose.Unity.Editor
 {
-    [CustomEditor(typeof(Rail))]
-    public class RailEditor : UnityEditor.Editor
+    [CustomEditor(typeof(BezierRail))]
+    public class BezierRailEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            Rail rail = target as Rail;
+            BezierRail rail = target as BezierRail;
             if (rail == null) return;
 
             BezierPath path = rail.PathToBake;
@@ -63,7 +63,7 @@ namespace Canal.Rose.Unity.Editor
 
         public void OnSceneGUI()
         {
-            Rail rail = target as Rail;
+            BezierRail rail = target as BezierRail;
             if (rail == null) return;
 
             BezierPath path = rail.PathToBake;

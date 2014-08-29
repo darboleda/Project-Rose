@@ -138,7 +138,7 @@ namespace Canal.Unity
         {
             if (this.points.Remove(point))
             {
-                GameObject.DestroyImmediate(point);
+                GameObject.DestroyImmediate(point.gameObject);
             }
         }
 

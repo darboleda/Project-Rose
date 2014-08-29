@@ -5,7 +5,7 @@ using Canal.Unity;
 
 namespace Canal.Rose.Unity.Engine
 {
-	public class Rail : Behavior {
+	public class BezierRail : Behavior {
         public BezierPath PathToBake;
         [System.NonSerialized]
         public float CurrentSample;
@@ -103,8 +103,8 @@ namespace Canal.Rose.Unity.Engine
         public Vector3 SampleWorld(float worldDistance)
         {
             if (this.SegmentPoints.Count == 0) return Vector3.zero;
-            if (this.SegmentPoints.Count == 1) return this.SegmentPoints[0];
-            if (worldDistance <= 0) return this.SegmentPoints[0];
+            if (this.SegmentPoints.Count == 1) return this.transform.TransformPoint(SegmentPoints[0]);
+            if (worldDistance <= 0) return this.transform.TransformPoint(SegmentPoints[0]);
 
             for (int i = 0, length = this.SegmentPoints.Count - 1; i < length; ++i)
             {
