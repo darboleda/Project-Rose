@@ -5,10 +5,8 @@ using Canal.Unity;
 
 namespace Canal.Rose.Unity.Engine
 {
-	public class BezierRail : Behavior {
+	public class BezierRail : Rail {
         public BezierPath PathToBake;
-        [System.NonSerialized]
-        public float CurrentSample;
 
         public int DefaultCurveSegmentCount = 10;
         public float LocalMinimumSegmentLength = 0.03f;
@@ -70,7 +68,7 @@ namespace Canal.Rose.Unity.Engine
             }
         }
 
-        public float GetLength()
+        public override float GetLength()
         {
             if (this.SegmentPoints.Count <= 1) return 0;
             float total = 0;
@@ -85,7 +83,7 @@ namespace Canal.Rose.Unity.Engine
             return total;
         }
 
-        public float GetWorldLength()
+        public override float GetWorldLength()
         {
             if (this.SegmentPoints.Count <= 1) return 0;
             float total = 0;
@@ -100,7 +98,7 @@ namespace Canal.Rose.Unity.Engine
             return total;
         }
 
-        public Vector3 SampleWorld(float worldDistance)
+        public override Vector3 SampleWorld(float worldDistance)
         {
             if (this.SegmentPoints.Count == 0) return Vector3.zero;
             if (this.SegmentPoints.Count == 1) return this.transform.TransformPoint(SegmentPoints[0]);
@@ -121,7 +119,7 @@ namespace Canal.Rose.Unity.Engine
             return this.SegmentPoints[this.SegmentPoints.Count - 1];
         }
 
-        public Vector3 Sample(float distance)
+        public override Vector3 Sample(float distance)
         {
             if (this.SegmentPoints.Count == 0) return Vector3.zero;
             if (this.SegmentPoints.Count == 1) return this.SegmentPoints[0];

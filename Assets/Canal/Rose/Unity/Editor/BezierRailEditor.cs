@@ -61,10 +61,50 @@ namespace Canal.Rose.Unity.Editor
             rail.PathToBake = path;
         }
 
+        public static void DrawSceneRail(BezierRail rail)
+        {
+            if (rail == null) return;
+            
+            BezierPath path = rail.PathToBake;
+            if (rail.SegmentPoints == null && path != null)
+            {
+                Vector3 position;
+                int curveIndex = Mathf.FloorToInt(rail.CurrentSample);
+                if (curveIndex < path.CurveCount)
+                {
+                    position = path.GetCurve(curveIndex).Sample(rail.CurrentSample - curveIndex);
+                }
+                else
+                {
+                    position = path.GetCurve(curveIndex - 1).Sample(1.0f);
+                }
+            }
+            else if (rail.SegmentPoints != null)
+            {
+                Color color = Handles.color;
+                Handles.color = Color.green;
+                
+                if (rail.SegmentPoints.Count > 1)
+                {
+                    for(int i = 0, length = rail.SegmentPoints.Count - 1; i < length; ++i)
+                    {
+                        Handles.DrawLine(rail.transform.TransformPoint(rail.SegmentPoints[i]),
+                                         rail.transform.TransformPoint(rail.SegmentPoints[i + 1]));
+                    }
+                    
+                }
+                Handles.color = color;
+            }
+        }
+
         public void OnSceneGUI()
         {
             BezierRail rail = target as BezierRail;
-            if (rail == null) return;
+            BezierRailEditor.DrawSceneRail(rail);
+
+            if(rail == null) return;
+            Color color = Handles.color;
+            Handles.color = Color.green;
 
             BezierPath path = rail.PathToBake;
             if (rail.SegmentPoints == null && path != null)
@@ -80,30 +120,15 @@ namespace Canal.Rose.Unity.Editor
                     position = path.GetCurve(curveIndex - 1).Sample(1.0f);
                 }
 
-                Color color = Handles.color;
-                Handles.color = Color.green;
                 Handles.DrawSolidDisc(position, Vector3.up, 0.05f * HandleUtility.GetHandleSize(position));
-                Handles.color = color;
             }
-
-            if (rail.SegmentPoints != null)
+            else if (rail.SegmentPoints != null)
             {
-                Color color = Handles.color;
-                Handles.color = Color.green;
-
-                if (rail.SegmentPoints.Count > 1)
-                {
-                    for(int i = 0, length = rail.SegmentPoints.Count - 1; i < length; ++i)
-                    {
-                        Handles.DrawLine(rail.transform.TransformPoint(rail.SegmentPoints[i]),
-                                         rail.transform.TransformPoint(rail.SegmentPoints[i + 1]));
-                    }
-
-                }
                 Vector3 position = rail.SampleWorld(rail.CurrentSample);
                 Handles.DrawSolidDisc(position, Vector3.up, 0.05f * HandleUtility.GetHandleSize(position));
-                Handles.color = color;
             }
+
+            Handles.color = color;
         }
     }
 }
