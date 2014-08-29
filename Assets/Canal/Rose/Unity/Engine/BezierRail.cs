@@ -116,7 +116,7 @@ namespace Canal.Rose.Unity.Engine
                 }
                 worldDistance -= segLength;
             }
-            return this.SegmentPoints[this.SegmentPoints.Count - 1];
+            return this.transform.TransformPoint(this.SegmentPoints[this.SegmentPoints.Count - 1]);
         }
 
         public override Vector3 Sample(float distance)
