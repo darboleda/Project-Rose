@@ -11,18 +11,6 @@ namespace Canal.Rose.Unity.Editor
     [CustomEditor(typeof(FusedRail))]
     public class FusedRailEditor : UnityEditor.Editor
     {
-        private static void DrawRail(Rail rail)
-        {
-            if (rail is BezierRail)
-            {
-                BezierRailEditor.DrawSceneRail(rail as BezierRail);
-            }
-            if (rail is FusedRail)
-            {
-                FusedRailEditor.DrawSceneRail(rail as FusedRail);
-            }
-        }
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -42,7 +30,7 @@ namespace Canal.Rose.Unity.Editor
             if (rail == null) return;
             foreach (Rail subRail in rail.Rails)
             {
-                FusedRailEditor.DrawRail(subRail);
+                subRail.Draw();
             }
         }
 

@@ -65,21 +65,7 @@ namespace Canal.Rose.Unity.Editor
         {
             if (rail == null) return;
             
-            BezierPath path = rail.PathToBake;
-            if (rail.SegmentPoints == null && path != null)
-            {
-                Vector3 position;
-                int curveIndex = Mathf.FloorToInt(rail.CurrentSample);
-                if (curveIndex < path.CurveCount)
-                {
-                    position = path.GetCurve(curveIndex).Sample(rail.CurrentSample - curveIndex);
-                }
-                else
-                {
-                    position = path.GetCurve(curveIndex - 1).Sample(1.0f);
-                }
-            }
-            else if (rail.SegmentPoints != null)
+            if (rail.SegmentPoints != null)
             {
                 Color color = Handles.color;
                 Handles.color = Color.green;

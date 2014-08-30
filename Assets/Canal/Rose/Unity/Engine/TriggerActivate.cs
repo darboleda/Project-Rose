@@ -9,12 +9,16 @@ namespace Canal.Rose.Unity.Engine
     {
         public GameObject target;
         public bool invert = false;
+        public bool setOnStart = false;
         public bool setOnEnter = true;
         public bool setOnExit = true;
 
-        public void Awake()
+        public void Start()
         {
-            target.SetActive(invert);
+            if (setOnStart)
+            {
+                target.SetActive(invert);
+            }
         }
         
         public void OnCanalTriggerEnter(Trigger trigger)
