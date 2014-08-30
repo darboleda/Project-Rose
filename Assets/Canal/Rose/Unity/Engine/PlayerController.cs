@@ -14,6 +14,7 @@ namespace Canal.Rose.Unity.Engine
         public float Radius = 1f;
 
         public Animator Animator;
+        public Transform FacingTarget;
 
         private HashSet<Trigger> currentTriggers = new HashSet<Trigger>();
 
@@ -30,7 +31,7 @@ namespace Canal.Rose.Unity.Engine
                 Vector3 facing = Tracer.GetFacingDirection(move);
                 facing.y = 0;
                 facing.Normalize();
-                Animator.transform.rotation = Quaternion.FromToRotation(Vector3.right, facing);
+                FacingTarget.rotation = Quaternion.FromToRotation(Vector3.right, facing);
             }
 
 
