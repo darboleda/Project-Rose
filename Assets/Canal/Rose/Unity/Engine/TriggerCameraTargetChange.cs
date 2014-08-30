@@ -12,7 +12,8 @@ namespace Canal.Rose.Unity.Engine
         public void OnCanalTriggerEnter(Trigger trigger)
         {
             Debug.Log(Controller);
-            Controller.SetCamera(Camera.main);
+            CameraControllerTarget target = Camera.main.GetComponent<CameraControllerTarget>();
+            if (target != null) target.StartTransition(Controller);
         }
     }
 }

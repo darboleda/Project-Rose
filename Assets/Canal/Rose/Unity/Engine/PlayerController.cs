@@ -20,7 +20,7 @@ namespace Canal.Rose.Unity.Engine
 
         public void FixedUpdate()
         {
-            float move = Input.GetAxisRaw("Horizontal");
+            float move = Input.GetAxis("Horizontal");
             
             transform.position = Tracer.Move(move * WalkSpeed * Time.deltaTime);
             Animator.SetFloat("hSpeed", move * WalkSpeed);

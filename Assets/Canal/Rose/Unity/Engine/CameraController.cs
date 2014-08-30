@@ -6,12 +6,12 @@ namespace Canal.Rose.Unity.Engine
 {
     public class CameraController : Behavior
     {
-        public CameraControllerTarget Camera;
-        public void SetCamera(Camera camera)
+        public Transform CameraContainer;
+
+        protected bool ready = false;
+        public void SetCamera(CameraControllerTarget target)
         {
-            CameraControllerTarget target = camera.GetComponent<CameraControllerTarget>();
-            if (target != null) target.SetController(this);
-            Camera = target;
+            target.SetController(this);
         }
     }
 }

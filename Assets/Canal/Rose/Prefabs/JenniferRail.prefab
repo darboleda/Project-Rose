@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tracer: {fileID: 11400004}
-  WalkSpeed: 4
+  WalkSpeed: 3
   Radius: 1
   Animator: {fileID: 9500000}
   FacingTarget: {fileID: 400006}
@@ -187,7 +187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facingRoot: {fileID: 400006}
   rotationTarget: {fileID: 400002}
-  lookTarget: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
