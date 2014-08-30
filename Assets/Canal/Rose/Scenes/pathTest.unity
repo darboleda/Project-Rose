@@ -855,7 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795525077015e485ca902d3ab324d459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CenterPoint: 13
+  CenterPoint: 9.78512383
   Radius: 1
   Parent: {fileID: 1555368910}
 --- !u!114 &696836681
@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0367e7a5a192040da9e13ba08f6ba27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1143955215}
+  Controller: {fileID: 1143955215}
 --- !u!1 &710855602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,8 +1346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795525077015e485ca902d3ab324d459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CenterPoint: 41
-  Radius: 1
+  CenterPoint: 39.7162704
+  Radius: 2.66205025
   Parent: {fileID: 1555368910}
 --- !u!114 &924574018
 MonoBehaviour:
@@ -1451,9 +1451,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421560707c7cf4cc2b06a1c6bca66c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Camera: {fileID: 0}
   LookAtTarget: {fileID: 840867361}
   PositionTarget: {fileID: 958019110}
   UpTarget: {fileID: 1046545872}
+  FollowSpeed: 2
+  RotationSpeed: 0
+  InterpolationRatio: .00999999978
+  LockZRotation: 1
+  LockXRotation: 1
 --- !u!4 &958019110
 Transform:
   m_ObjectHideFlags: 0
@@ -1461,7 +1467,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 958019108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.83601, y: 4.7129879, z: -1.3227663}
+  m_LocalPosition: {x: 18.83601, y: -5.50496864, z: -1.3227663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1046545872}
@@ -1621,8 +1627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795525077015e485ca902d3ab324d459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CenterPoint: 15
-  Radius: 1
+  CenterPoint: 13.571167
+  Radius: 1.00000048
   Parent: {fileID: 1555368910}
 --- !u!114 &1014618835
 MonoBehaviour:
@@ -1635,7 +1641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0367e7a5a192040da9e13ba08f6ba27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 958019109}
+  Controller: {fileID: 958019109}
 --- !u!1 &1046545871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,7 +1928,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143955213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.71577168, z: 0}
+  m_LocalPosition: {x: 0, y: .987248421, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1795573547}
@@ -1939,9 +1945,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421560707c7cf4cc2b06a1c6bca66c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Camera: {fileID: 1851525682}
   LookAtTarget: {fileID: 840867361}
   PositionTarget: {fileID: 1143955214}
   UpTarget: {fileID: 1795573547}
+  FollowSpeed: 2
+  RotationSpeed: 0
+  InterpolationRatio: .00999999978
+  LockZRotation: 1
+  LockXRotation: 1
 --- !u!1 &1276603372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,7 +2856,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .0772058666, g: .0872140303, b: .102941155, a: .0196078438}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -2873,8 +2885,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1851525676}
-  m_LocalRotation: {x: .270767033, y: .0807643905, z: .0228037462, w: .958979845}
-  m_LocalPosition: {x: 0, y: 7.67770576, z: -13.4619961}
+  m_LocalRotation: {x: 0, y: .0980746523, z: 0, w: .995179057}
+  m_LocalPosition: {x: .581151485, y: 1.90395927, z: -13.5776644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1305761057}
@@ -2891,9 +2903,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44d5d0ce64b446f99054c5fb1b28ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1143955215}
-  FollowSpeed: 5
-  RotationSpeed: 80
 --- !u!1 &2009716783
 GameObject:
   m_ObjectHideFlags: 0

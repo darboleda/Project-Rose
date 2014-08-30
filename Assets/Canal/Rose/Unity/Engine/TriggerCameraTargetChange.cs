@@ -7,11 +7,12 @@ namespace Canal.Rose.Unity.Engine
 {
     public class TriggerCameraTargetChange : Behavior
     {
-        public CameraPosition target;
+        public CameraController Controller;
 
         public void OnCanalTriggerEnter(Trigger trigger)
         {
-            Camera.main.GetComponent<MovingCamera>().Target = target;
+            Debug.Log(Controller);
+            Controller.SetCamera(Camera.main);
         }
     }
 }
