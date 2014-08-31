@@ -1857,7 +1857,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tracer: {fileID: 1062739224}
-  WalkSpeed: 3
+  WalkAcceleration: 10
+  WalkSpeed: 2
+  MomentumRatio: .600000024
   Radius: 1
   Animator: {fileID: 840867359}
   FacingTarget: {fileID: 1702458407}

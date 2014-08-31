@@ -9,7 +9,10 @@ namespace Canal.Rose.Unity.Engine
 {
     public class PlayerController : Behavior {
         public Tracer Tracer;
+
+        public float WalkAcceleration = 1f;
         public float WalkSpeed = 2f;
+        public float MomentumRatio = 0.5f;
 
         public float Radius = 1f;
 
@@ -18,15 +21,25 @@ namespace Canal.Rose.Unity.Engine
 
         public bool activateTriggers = true;
 
+        private float currentSpeed = 0;
+
         private HashSet<Trigger> currentTriggers = new HashSet<Trigger>();
 
         public void FixedUpdate()
         {
-            float move = Input.GetAxis("Horizontal");
-            
-            transform.position = Tracer.Move(move * WalkSpeed * Time.deltaTime);
+            float move = Input.GetAxisRaw("Horizontal");
+            if (move != 0)
+            {
+                currentSpeed = Mathf.Clamp(currentSpeed + (move * WalkAcceleration * Time.deltaTime), -WalkSpeed, WalkSpeed);
+            }
+            else
+            {
+                currentSpeed *= MomentumRatio;
+            }
+
+            transform.position = Tracer.Move(currentSpeed * Time.deltaTime);
             Animator.SetFloat("hSpeed", move * WalkSpeed);
-            Animator.SetBool("Walking", Mathf.Abs(move) > 0.1f);
+            Animator.SetBool("Walking", Mathf.Abs(currentSpeed) > 0.5f);
 
             if (move != 0)
             {
