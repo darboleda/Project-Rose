@@ -12,8 +12,8 @@ namespace Canal.Rose.Unity.Engine
         public override Vector3 Move(float deltaDistance)
         {
             currentPosition += deltaDistance;
-            currentPosition = Mathf.Clamp(currentPosition, 0, CurrentRail.GetWorldLength());
-            return CurrentRail.SampleWorld(currentPosition + deltaDistance);
+            Vector3 sample = CurrentRail.SampleWorld(currentPosition + deltaDistance);
+            return sample;
         }
 
         public override Vector3 GetFacingDirection(float direction)

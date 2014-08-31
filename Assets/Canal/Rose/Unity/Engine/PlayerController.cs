@@ -40,10 +40,14 @@ namespace Canal.Rose.Unity.Engine
             {
                 if (currentTriggers.Contains(trigger)) trigger.NotifyTriggerStay();
                 else trigger.NotifyTriggerEnter();
+            }
+            foreach (Trigger trigger in newTriggers)
+            {
                 currentTriggers.Remove(trigger);
             }
             foreach (Trigger leftover in currentTriggers)
             {
+                Debug.Log("HELLO");
                 leftover.NotifyTriggerExit();
             }
             currentTriggers.Clear();

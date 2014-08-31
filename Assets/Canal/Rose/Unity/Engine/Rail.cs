@@ -11,7 +11,8 @@ namespace Canal.Rose.Unity.Engine
         [System.NonSerialized]
         public float CurrentSample;
 
-        protected List<RailTrigger> registeredTriggers = new List<RailTrigger>();
+        [System.NonSerialized]
+        public List<RailTrigger> registeredTriggers = new List<RailTrigger>();
 
         public abstract float GetLength();
         public abstract float GetWorldLength();
@@ -29,10 +30,16 @@ namespace Canal.Rose.Unity.Engine
             registeredTriggers.Remove(trigger);
         }
 
-        public RailTrigger[] GetFiredTriggers(float positionMin, float positionMax)
+        public virtual RailTrigger[] GetFiredTriggers(float positionMin, float positionMax)
         {
             return registeredTriggers.Where((trigger, i) => {
-                if (trigger == null) return false;
+                return IsTriggerContained(trigger, positionMin, positionMax);
+            }).ToArray();
+        }
+
+        protected static bool IsTriggerContained(Trigger trigger, float positionMin, float positionMax)
+        {
+            if (trigger == null) return false;
                 float min = trigger.CenterPoint - trigger.Radius;
                 float max = trigger.CenterPoint + trigger.Radius;
 
@@ -40,7 +47,6 @@ namespace Canal.Rose.Unity.Engine
                     || (max > positionMin && min < positionMin)
                     || (max < positionMax && min > positionMin)
                     || (min < positionMin && max > positionMax);
-            }).ToArray();
         }
     }
 }

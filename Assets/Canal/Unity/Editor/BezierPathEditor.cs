@@ -11,6 +11,7 @@ namespace Canal.Unity.Editor
     {
         private static bool enableTangentDrag = true;
 
+        private BezierPoint previousSelected = null;
         public BezierPoint selectedPoint = null;
         public override void OnInspectorGUI()
         {
@@ -27,9 +28,15 @@ namespace Canal.Unity.Editor
                 for (int i = 0, length = path.Points.Count; i < length; ++i)
                 {
                     bool shouldRemove, shouldAddAfter;
+                    Color color = GUI.backgroundColor;
+                    if (path.Points[i] == selectedPoint)
+                    {
+                        GUI.backgroundColor = Color.cyan;
+                    }
                     this.DrawPointInspector(i + 1, path.Points[i], out shouldRemove, out shouldAddAfter);
                     if (shouldRemove) pointToRemove = path.Points[i];
                     if (shouldAddAfter) pointToAddAfter = path.Points[i];
+                    GUI.backgroundColor = color;
                 }
                 if (pointToRemove != null) path.DeletePoint(pointToRemove);
                 if (pointToAddAfter != null) path.AddPointAfter(pointToAddAfter);
@@ -108,6 +115,11 @@ namespace Canal.Unity.Editor
             {
                 Tools.current = Tool.None;
                 this.DrawBezierPoint(selectedPoint, true);
+            }
+            if (selectedPoint != previousSelected)
+            {
+                previousSelected = selectedPoint;
+                this.Repaint();
             }
         }
 
