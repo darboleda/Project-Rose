@@ -98,8 +98,9 @@ namespace Canal.Rose.Unity.Engine
             return total;
         }
 
-        public override Vector3 SampleWorld(float worldDistance)
+        public override Vector3 SampleWorld(float worldDistance, out float sampledDistance)
         {
+            sampledDistance = 0;
             if (this.SegmentPoints.Count == 0) return Vector3.zero;
             if (this.SegmentPoints.Count == 1) return this.transform.TransformPoint(SegmentPoints[0]);
             if (worldDistance <= 0) return this.transform.TransformPoint(SegmentPoints[0]);
@@ -112,15 +113,18 @@ namespace Canal.Rose.Unity.Engine
                 float segLength = (point2 - point1).magnitude;
                 if(segLength > worldDistance)
                 {
+                    sampledDistance += worldDistance;
                     return Vector3.Lerp(point1, point2, worldDistance / segLength);
                 }
+                sampledDistance += segLength;
                 worldDistance -= segLength;
             }
             return this.transform.TransformPoint(this.SegmentPoints[this.SegmentPoints.Count - 1]);
         }
 
-        public override Vector3 Sample(float distance)
+        public override Vector3 Sample(float distance, out float sampledDistance)
         {
+            sampledDistance = 0;
             if (this.SegmentPoints.Count == 0) return Vector3.zero;
             if (this.SegmentPoints.Count == 1) return this.SegmentPoints[0];
             if (distance <= 0) return this.SegmentPoints[0];
@@ -132,8 +136,10 @@ namespace Canal.Rose.Unity.Engine
                 float segLength = (point2 - point1).magnitude;
                 if(segLength > distance)
                 {
+                    sampledDistance += distance;
                     return Vector3.Lerp(point1, point2, distance / segLength);
                 }
+                sampledDistance += segLength;
                 distance -= segLength;
             }
             return this.SegmentPoints[this.SegmentPoints.Count - 1];

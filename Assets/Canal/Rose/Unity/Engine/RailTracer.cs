@@ -11,8 +11,7 @@ namespace Canal.Rose.Unity.Engine
 
         public override Vector3 Move(float deltaDistance)
         {
-            currentPosition += deltaDistance;
-            Vector3 sample = CurrentRail.SampleWorld(currentPosition + deltaDistance);
+            Vector3 sample = CurrentRail.SampleWorld(currentPosition + deltaDistance, out currentPosition);
             return sample;
         }
 

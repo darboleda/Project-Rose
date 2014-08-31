@@ -32,8 +32,9 @@ namespace Canal.Rose.Unity.Engine
             return total;
         }
 
-        public override Vector3 Sample(float distance)
+        public override Vector3 Sample(float distance, out float sampledDistance)
         {
+            sampledDistance = 0;
             if (Rails.Length == 0) return Vector3.zero;
             if (distance < 0)
             {
@@ -46,21 +47,28 @@ namespace Canal.Rose.Unity.Engine
             }
             do
             {
+                sampledDistance = 0;
                 for (int i = 0, length = Rails.Length; i < length; ++i)
                 {
                     float railLength = Rails[i].GetLength();
                     if(railLength >= distance)
                     {
-                        return Rails[i].Sample(distance);
+                        float sampled;
+                        Vector3 point = Rails[i].Sample(distance, out sampled);
+                        sampledDistance += sampled;
+                        return point;
                     }
+                    sampledDistance += railLength;
                     distance -= railLength;
                 }
             } while(loop);
-            return Rails[Rails.Length - 1].Sample(1);
+            sampledDistance = this.GetLength();
+            return Rails[Rails.Length - 1].Sample(Rails[Rails.Length - 1].GetLength());
         }
 
-        public override Vector3 SampleWorld(float worldDistance)
+        public override Vector3 SampleWorld(float worldDistance, out float sampledDistance)
         {
+            sampledDistance = 0;
             if (Rails.Length == 0) return Vector3.zero;
             if (worldDistance < 0)
             {
@@ -73,17 +81,24 @@ namespace Canal.Rose.Unity.Engine
             }
             do
             {
+                sampledDistance = 0;
                 for (int i = 0, length = Rails.Length; i < length; ++i)
                 {
                     float railLength = Rails[i].GetWorldLength();
                     if(railLength >= worldDistance)
                     {
-                        return Rails[i].SampleWorld(worldDistance);
+
+                        float sampled;
+                        Vector3 point = Rails[i].SampleWorld(worldDistance, out sampled);
+                        sampledDistance += sampled;
+                        return point;
                     }
+                    sampledDistance += railLength;
                     worldDistance -= railLength;
                 }
             } while (loop);
-            return Rails[Rails.Length - 1].SampleWorld(1);
+            sampledDistance = this.GetWorldLength();
+            return Rails[Rails.Length - 1].SampleWorld(Rails[Rails.Length - 1].GetWorldLength());
         }
 
         public override RailTrigger[] GetFiredTriggers(float positionMin, float positionMax)

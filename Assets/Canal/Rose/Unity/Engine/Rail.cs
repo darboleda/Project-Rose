@@ -17,8 +17,20 @@ namespace Canal.Rose.Unity.Engine
         public abstract float GetLength();
         public abstract float GetWorldLength();
 
-        public abstract Vector3 Sample(float distance);
-        public abstract Vector3 SampleWorld(float worldDistance);
+        public Vector3 Sample(float distance)
+        {
+            float sampledDistance;
+            return Sample(distance, out sampledDistance);
+        }
+
+        public Vector3 SampleWorld(float worldDistance)
+        {
+            float sampledDistance;
+            return SampleWorld(worldDistance, out sampledDistance);
+        }
+
+        public abstract Vector3 Sample(float distance, out float sampledDistance);
+        public abstract Vector3 SampleWorld(float worldDistance, out float sampledDistance);
 
         public void RegisterTrigger(RailTrigger trigger)
         {

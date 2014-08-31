@@ -16,6 +16,8 @@ namespace Canal.Rose.Unity.Engine
         public Animator Animator;
         public Transform FacingTarget;
 
+        public bool activateTriggers = true;
+
         private HashSet<Trigger> currentTriggers = new HashSet<Trigger>();
 
         public void FixedUpdate()
@@ -34,24 +36,26 @@ namespace Canal.Rose.Unity.Engine
                 FacingTarget.rotation = Quaternion.FromToRotation(Vector3.right, facing);
             }
 
-
-            List<Trigger> newTriggers = new List<Trigger>(Tracer.GetTriggers(this.Radius));
-            foreach (Trigger trigger in newTriggers)
+            if (activateTriggers)
             {
-                if (currentTriggers.Contains(trigger)) trigger.NotifyTriggerStay();
-                else trigger.NotifyTriggerEnter();
+                List<Trigger> newTriggers = new List<Trigger>(Tracer.GetTriggers(this.Radius));
+                foreach (Trigger trigger in newTriggers)
+                {
+                    if (currentTriggers.Contains(trigger)) trigger.NotifyTriggerStay();
+                    else trigger.NotifyTriggerEnter();
+                }
+                foreach (Trigger trigger in newTriggers)
+                {
+                    currentTriggers.Remove(trigger);
+                }
+                foreach (Trigger leftover in currentTriggers)
+                {
+                    Debug.Log("HELLO");
+                    leftover.NotifyTriggerExit();
+                }
+                currentTriggers.Clear();
+                foreach (Trigger trigger in newTriggers) currentTriggers.Add(trigger);
             }
-            foreach (Trigger trigger in newTriggers)
-            {
-                currentTriggers.Remove(trigger);
-            }
-            foreach (Trigger leftover in currentTriggers)
-            {
-                Debug.Log("HELLO");
-                leftover.NotifyTriggerExit();
-            }
-            currentTriggers.Clear();
-            foreach (Trigger trigger in newTriggers) currentTriggers.Add(trigger);
         }
     }
 }
