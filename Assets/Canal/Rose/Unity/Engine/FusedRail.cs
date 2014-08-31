@@ -13,6 +13,26 @@ namespace Canal.Rose.Unity.Engine
 
         private Vector3[] railConnectors;
 
+        public override Vector3 SampleMove(float start, float end, out float sampledEnd, out float leftoverDelta)
+        {
+            Vector3 result = Sample(end, out sampledEnd);
+            leftoverDelta = end - sampledEnd;
+            if (!loop) return result;
+
+            leftoverDelta = 0;
+            return result;
+        }
+
+        public override Vector3 SampleWorldMove(float start, float end, out float sampledEnd, out float leftoverDelta)
+        {
+            Vector3 result = SampleWorld(end, out sampledEnd);
+            leftoverDelta = end - sampledEnd;
+            if (!loop) return result;
+
+            leftoverDelta = 0;
+            return result;
+        }
+
         public override float GetLength()
         {
             float total = 0;

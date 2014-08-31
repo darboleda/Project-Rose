@@ -8,14 +8,20 @@ namespace Canal.Rose.Unity.Engine
 {
     public abstract class Rail : MapNode
     {
+        [SerializeField]
+        private MapNode previousNode;
+
+        [SerializeField]
+        private MapNode nextNode;
+        
+        public override MapNode GetNextNode(MapNode from) { return nextNode; }
+        public override MapNode GetPreviousNode(MapNode from) { return previousNode; }
+
         [System.NonSerialized]
         public float CurrentSample;
 
         [System.NonSerialized]
         public List<RailTrigger> registeredTriggers = new List<RailTrigger>();
-
-        public abstract float GetLength();
-        public abstract float GetWorldLength();
 
         public void RegisterTrigger(RailTrigger trigger)
         {

@@ -18,8 +18,8 @@ namespace Canal.Rose.Unity.Engine
         public override Vector3 GetFacingDirection(float direction)
         {
             direction = Mathf.Sign(direction);
-            return (CurrentRail.SampleWorld(currentPosition + FacingSampleDistance * direction)
-                 - CurrentRail.SampleWorld(currentPosition - FacingSampleDistance * direction)).normalized;
+            return CurrentRail.GetFacingDirection(currentPosition - FacingSampleDistance * direction,
+                                                  currentPosition + FacingSampleDistance * direction);
         }
 
         public override Trigger[] GetTriggers(float radius)
