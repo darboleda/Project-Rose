@@ -56,6 +56,16 @@ Shader "Sprites/Diffuse Two-sides"
 			o.Alpha = c.a;
 		}
 		ENDCG
+
+		// extra pass that renders to depth buffer only
+	    Pass {
+	        ZWrite On
+	        ColorMask 0
+	    }
+
+    	// paste in forward rendering passes from Transparent/Diffuse
+    	// UsePass "Transparent/Diffuse/FORWARD"
+		
 	}
 
 Fallback "Transparent/VertexLit"
