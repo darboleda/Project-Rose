@@ -466,6 +466,7 @@ MonoBehaviour:
   Rails:
   - {fileID: 888799392}
   loop: 1
+  wrapTriggers: 0
 --- !u!1 &404938277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,7 +1376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: {fileID: 1695988398}
   UseDefaultRatio: 0
-  InterpolationRatio: .150000006
+  InterpolationRatio: .0799999982
 --- !u!114 &801551460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3166,7 +3167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: {fileID: 2020063722}
   UseDefaultRatio: 0
-  InterpolationRatio: .150000006
+  InterpolationRatio: .0799999982
 --- !u!114 &1526069553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3702,7 +3703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: {fileID: 986597992}
   UseDefaultRatio: 0
-  InterpolationRatio: .150000006
+  InterpolationRatio: .0799999982
 --- !u!1 &1733533116
 GameObject:
   m_ObjectHideFlags: 0
@@ -4803,7 +4804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: {fileID: 969630765}
   UseDefaultRatio: 0
-  InterpolationRatio: .150000006
+  InterpolationRatio: .0799999982
 --- !u!1 &2129979525
 GameObject:
   m_ObjectHideFlags: 0

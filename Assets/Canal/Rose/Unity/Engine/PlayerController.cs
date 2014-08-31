@@ -50,7 +50,6 @@ namespace Canal.Rose.Unity.Engine
                 }
                 foreach (Trigger leftover in currentTriggers)
                 {
-                    Debug.Log("HELLO");
                     leftover.NotifyTriggerExit();
                 }
                 currentTriggers.Clear();

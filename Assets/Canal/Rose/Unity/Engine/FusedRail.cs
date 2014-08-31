@@ -7,8 +7,9 @@ namespace Canal.Rose.Unity.Engine
 {
     public class FusedRail : Rail
     {
-        public Rail[] Rails;
+        public Rail[] Rails = new Rail[0];
         public bool loop;
+        public bool wrapTriggers = false;
 
         private Vector3[] railConnectors;
 
@@ -103,8 +104,8 @@ namespace Canal.Rose.Unity.Engine
 
         public override Trigger[] GetFiredTriggers(float positionMin, float positionMax)
         {
-            if (positionMin < 0
-                || positionMax < 0)
+            if (wrapTriggers &&
+                (positionMin < 0 || positionMax < 0))
             {
                 if (loop)
                 {
@@ -128,6 +129,12 @@ namespace Canal.Rose.Unity.Engine
                 if (trigger.Parent == this) return IsTriggerContained(trigger, min, max);
                 do
                 {
+                    if (!wrapTriggers)
+                    {
+                        if (min < 0) min = 0;
+                        float worldLength = GetWorldLength();
+                        if (max > worldLength) max = worldLength;
+                    }
                     foreach (Rail rail in Rails)
                     {
                         if (min < 0 && max < 0) return false;
@@ -147,6 +154,7 @@ namespace Canal.Rose.Unity.Engine
                         }
                         return true;
                     }
+                    if (min < 0 && max < 0) return false;
                 } while (loop);
                 return false;
             }).ToArray();

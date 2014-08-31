@@ -921,11 +921,72 @@ Prefab:
       propertyPath: CurrentRail
       value: 
       objectReference: {fileID: 1555368910}
+    - target: {fileID: 11400008, guid: 731bc2616df1f4872aad8f62480d58dd, type: 2}
+      propertyPath: CurrentNode
+      value: 
+      objectReference: {fileID: 1779240992}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 731bc2616df1f4872aad8f62480d58dd, type: 2}
   m_RootGameObject: {fileID: 1062739220}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &613670443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 613670444}
+  - 114: {fileID: 613670446}
+  - 114: {fileID: 613670445}
+  m_Layer: 0
+  m_Name: Camera Change Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613670444
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 613670443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 937437804}
+  m_RootOrder: 20
+--- !u!114 &613670445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 613670443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795525077015e485ca902d3ab324d459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CenterPoint: 42
+  Radius: .150000006
+  Parent: {fileID: 1555368910}
+--- !u!114 &613670446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 613670443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0367e7a5a192040da9e13ba08f6ba27e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Controller: {fileID: 958019109}
+  UseDefaultRatio: 0
+  InterpolationRatio: 1
 --- !u!1 &696836678
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +1042,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 1143955215}
+  UseDefaultRatio: 1
+  InterpolationRatio: .0299999993
 --- !u!1 &710855602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1309,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1138286717
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4f325dafd4b324b4e87b114e2434e550, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1500,6 +1563,9 @@ Transform:
   - {fileID: 795681937}
   - {fileID: 1700836854}
   - {fileID: 89542898}
+  - {fileID: 1779240991}
+  - {fileID: 1491519028}
+  - {fileID: 613670444}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!1 &958019108
@@ -1533,7 +1599,7 @@ MonoBehaviour:
   LookAtTarget: {fileID: 840867361}
   UpTarget: {fileID: 1046545872}
   LockXRotation: 1
-  LockYRotation: 1
+  LockYRotation: 0
   LockZRotation: 1
 --- !u!4 &958019110
 Transform:
@@ -1718,6 +1784,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 958019109}
+  UseDefaultRatio: 1
+  InterpolationRatio: .0299999993
 --- !u!1 &1046545871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1823,7 @@ GameObject:
   - 4: {fileID: 1062739221}
   - 114: {fileID: 1062739223}
   - 114: {fileID: 1062739222}
+  - 114: {fileID: 1062739224}
   m_Layer: 0
   m_Name: JenniferRail
   m_TagString: Untagged
@@ -1787,11 +1856,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b4068fe2ef24dc982c2dbecd5b6317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tracer: {fileID: 1062739223}
+  Tracer: {fileID: 1062739224}
   WalkSpeed: 3
   Radius: 1
   Animator: {fileID: 840867359}
   FacingTarget: {fileID: 1702458407}
+  activateTriggers: 1
 --- !u!114 &1062739223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,7 +1874,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868b642e31214452692550a9b3840066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPosition: 0
   CurrentRail: {fileID: 1555368910}
+  FacingSampleDistance: .00100000005
+--- !u!114 &1062739224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400008, guid: 731bc2616df1f4872aad8f62480d58dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 603126681}
+  m_GameObject: {fileID: 1062739220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f815fd4afb82d4ea790239e292ac53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPosition: 0
+  CurrentNode: {fileID: 1779240992}
   FacingSampleDistance: .00100000005
 --- !u!1 &1114191754
 GameObject:
@@ -2265,7 +2351,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1138286717
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4f325dafd4b324b4e87b114e2434e550, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2332,6 +2418,63 @@ Light:
   m_ShadowAngle: 0
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
+--- !u!1 &1491519025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1491519028}
+  - 114: {fileID: 1491519027}
+  - 114: {fileID: 1491519026}
+  m_Layer: 0
+  m_Name: Camera Change Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1491519026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1491519025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795525077015e485ca902d3ab324d459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CenterPoint: 1
+  Radius: .100000001
+  Parent: {fileID: 1555368910}
+--- !u!114 &1491519027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1491519025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0367e7a5a192040da9e13ba08f6ba27e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Controller: {fileID: 1143955215}
+  UseDefaultRatio: 0
+  InterpolationRatio: 1
+--- !u!4 &1491519028
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1491519025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 937437804}
+  m_RootOrder: 19
 --- !u!1 &1555368908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,6 +2981,49 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1754053184}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1779240990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1779240991}
+  - 114: {fileID: 1779240992}
+  m_Layer: 0
+  m_Name: Fused Rail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1779240991
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1779240990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 937437804}
+  m_RootOrder: 18
+--- !u!114 &1779240992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1779240990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520a57fa79dcb477881e1d5b1a78d767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rails:
+  - {fileID: 1555368910}
+  loop: 1
+  wrapTriggers: 0
 --- !u!1 &1779414675
 GameObject:
   m_ObjectHideFlags: 0
