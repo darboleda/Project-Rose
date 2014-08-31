@@ -9,16 +9,23 @@ namespace Canal.Rose.Unity.Engine
     {
         public CameraController Controller;
 
+        public bool UseDefaultRatio = true;
+        public float InterpolationRatio = 0.03f;
+
         public void OnCanalTriggerEnter(Trigger trigger)
         {
-            Debug.Log("Enter");
             CameraControllerTarget target = Camera.main.GetComponent<CameraControllerTarget>();
-            if (target != null) target.StartTransition(Controller);
-        }
-
-        public void OnCanalTriggerExit(Trigger trigger)
-        {
-            Debug.Log("Exit");
+            if (target != null)
+            {
+                if (UseDefaultRatio)
+                {
+                    target.StartTransition(Controller);
+                }
+                else
+                {
+                    target.StartTransition(Controller, InterpolationRatio);
+                }
+            }
         }
     }
 }

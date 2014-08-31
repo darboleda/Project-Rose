@@ -101,7 +101,7 @@ namespace Canal.Rose.Unity.Engine
             return Rails[Rails.Length - 1].SampleWorld(Rails[Rails.Length - 1].GetWorldLength());
         }
 
-        public override RailTrigger[] GetFiredTriggers(float positionMin, float positionMax)
+        public override Trigger[] GetFiredTriggers(float positionMin, float positionMax)
         {
             if (positionMin < 0
                 || positionMax < 0)

@@ -6,7 +6,7 @@ using Canal.Unity;
 
 namespace Canal.Rose.Unity.Engine
 {
-    public abstract class Rail : Behavior
+    public abstract class Rail : MapNode
     {
         [System.NonSerialized]
         public float CurrentSample;
@@ -16,21 +16,6 @@ namespace Canal.Rose.Unity.Engine
 
         public abstract float GetLength();
         public abstract float GetWorldLength();
-
-        public Vector3 Sample(float distance)
-        {
-            float sampledDistance;
-            return Sample(distance, out sampledDistance);
-        }
-
-        public Vector3 SampleWorld(float worldDistance)
-        {
-            float sampledDistance;
-            return SampleWorld(worldDistance, out sampledDistance);
-        }
-
-        public abstract Vector3 Sample(float distance, out float sampledDistance);
-        public abstract Vector3 SampleWorld(float worldDistance, out float sampledDistance);
 
         public void RegisterTrigger(RailTrigger trigger)
         {
@@ -42,7 +27,7 @@ namespace Canal.Rose.Unity.Engine
             registeredTriggers.Remove(trigger);
         }
 
-        public virtual RailTrigger[] GetFiredTriggers(float positionMin, float positionMax)
+        public override Trigger[] GetFiredTriggers(float positionMin, float positionMax)
         {
             return registeredTriggers.Where((trigger, i) => {
                 return IsTriggerContained(trigger, positionMin, positionMax);
