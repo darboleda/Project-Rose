@@ -1644,8 +1644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932f262344b95448e8a80943493c8431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousNode: {fileID: 888799392}
-  nextNode: {fileID: 888799392}
+  previousNode: {fileID: 2012498961}
+  nextNode: {fileID: 1317304685}
   PathToBake: {fileID: 888799391}
   DefaultCurveSegmentCount: 10
   LocalMinimumSegmentLength: .0299999993
@@ -2837,8 +2837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4035b45051bef9428e8d3636f0a8498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousNode: {fileID: 888799392}
-  nextNode: {fileID: 1256339745}
+  junctions:
+  - entrance: {fileID: 888799392}
+    exit: {fileID: 1256339745}
 --- !u!4 &1317304686
 Transform:
   m_ObjectHideFlags: 0
@@ -4564,8 +4565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4035b45051bef9428e8d3636f0a8498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousNode: {fileID: 1256339745}
-  nextNode: {fileID: 888799392}
+  junctions:
+  - entrance: {fileID: 1256339745}
+    exit: {fileID: 888799392}
 --- !u!4 &2012498962
 Transform:
   m_ObjectHideFlags: 0

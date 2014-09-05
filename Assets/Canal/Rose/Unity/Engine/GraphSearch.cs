@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 using Canal.Unity;
 
@@ -20,7 +21,7 @@ namespace Canal.Rose.Unity.Engine
                 MapNode node = nodesToAdd.Dequeue();
                 foreach (MapNode child in node.Exits.Concat(node.Entrances))
                 {
-                    if (nodes.Add(child)) { nodesToAdd.Enqueue(child); }
+                    if (child != null && nodes.Add(child)) { nodesToAdd.Enqueue(child); }
                 }
             }
 
@@ -34,6 +35,12 @@ namespace Canal.Rose.Unity.Engine
         {
             public GraphNode Entrance;
             public GraphNode Exit;
+
+            public IEnumerable<GraphNode> GetNodes()
+            {
+                yield return Entrance;
+                yield return Exit;
+            }
         }
 
         private Dictionary<MapNode, GraphNodeWrapper> mappedNodes = new Dictionary<MapNode, GraphNodeWrapper>();
@@ -43,8 +50,8 @@ namespace Canal.Rose.Unity.Engine
             {
                 mappedNodes[node] = new GraphNodeWrapper()
                 {
-                    Entrance = new GraphNode(node),
-                    Exit = new GraphNode(node)
+                    Entrance = new GraphNode(node, false),
+                    Exit = new GraphNode(node, true)
                 };
             }
 
@@ -58,14 +65,100 @@ namespace Canal.Rose.Unity.Engine
                 exit.AddTransition(entrance, length);
                 foreach (MapNode node in pair.Key.Entrances)
                 {
+                    if (node == null) continue;
                     entrance.AddTransition(mappedNodes[node].Exit, 0);
                 }
 
                 foreach (MapNode node in pair.Key.Exits)
                 {
+                    if (node == null) continue;
                     exit.AddTransition(mappedNodes[node].Entrance, 0);
                 }
             }
+        }
+
+        public float GetShortestDistance(MapNode start, float startPosition, MapNode end, float endPosition)
+        {
+            Dictionary<GraphNode, float> distanceFromSource;
+            Dictionary<GraphNode, GraphNode> optimalPrevious;
+
+            GraphNode final = this.GenerateShortestDistanceMap(
+                start, startPosition, end, endPosition,
+                out distanceFromSource, out optimalPrevious);
+
+            return distanceFromSource[final];
+        }
+
+        public Stack<GraphNode> GeneratePath(MapNode start, float startPosition, MapNode end, float endPosition)
+        {
+            Stack<GraphNode> path = new Stack<GraphNode>();
+            Dictionary<GraphNode, float> distanceFromSource;
+            Dictionary<GraphNode, GraphNode> optimalPrevious;
+
+            GraphNode final = this.GenerateShortestDistanceMap(
+                start, startPosition, end, endPosition,
+                out distanceFromSource, out optimalPrevious);
+
+            GraphNode current = final;
+            while (optimalPrevious.ContainsKey(current))
+            {
+                current = optimalPrevious[current];
+                path.Push(current);
+            }
+            path.Pop();
+            return path;
+        }
+
+        private GraphNode GenerateShortestDistanceMap(
+            MapNode startNode, float startPosition, 
+            MapNode endNode, float endPosition,
+            out Dictionary<GraphNode, float> distanceFromSource,
+            out Dictionary<GraphNode, GraphNode> optimalPrevious)
+        {
+            distanceFromSource = new Dictionary<GraphNode, float>();
+            optimalPrevious = new Dictionary<GraphNode, GraphNode>();
+
+            Queue<GraphNode> nodesToVisit = new Queue<GraphNode>();
+            foreach (GraphNode node in mappedNodes.Values.SelectMany(x => x.GetNodes()))
+            {
+                distanceFromSource[node] = float.PositiveInfinity;
+            }
+
+            GraphNode start = new GraphNode(startNode, false);
+            GraphNode end = new GraphNode(endNode, false);
+
+            distanceFromSource[start] = 0;
+            distanceFromSource[end] = float.PositiveInfinity;
+
+            start.AddTransition(mappedNodes[startNode].Entrance, startPosition);
+            start.AddTransition(mappedNodes[startNode].Exit, startNode.GetWorldLength() - startPosition);
+
+            mappedNodes[endNode].Entrance.AddTransition(end, endPosition);
+            mappedNodes[endNode].Exit.AddTransition(end, endNode.GetWorldLength() - endPosition);
+
+            distanceFromSource[start] = 0;
+            nodesToVisit.Enqueue(start);
+
+            while (nodesToVisit.Any())
+            {
+                GraphNode node = nodesToVisit.Dequeue();
+                foreach (Transition transition in node.Transitions)
+                {
+                    if (optimalPrevious.ContainsKey(transition.Destination))
+                        continue;
+                    nodesToVisit.Enqueue(transition.Destination);
+                    float newDistance = distanceFromSource[node] + transition.Cost;
+                    if (newDistance < distanceFromSource[transition.Destination])
+                    {
+                        distanceFromSource[transition.Destination] = newDistance;
+                        optimalPrevious[transition.Destination] = node;
+                    }
+                }
+            }
+
+            mappedNodes[endNode].Entrance.RemoveTransition(end);
+            mappedNodes[endNode].Exit.RemoveTransition(end);
+            return end;
         }
     }
 
@@ -73,14 +166,34 @@ namespace Canal.Rose.Unity.Engine
     {
         public MapNode Source;
         public List<Transition> Transitions = new List<Transition>();
-        public GraphNode(MapNode source)
+        public bool isExit;
+
+        public GraphNode(MapNode source, bool isExit)
         {
             Source = source;
+            this.isExit = isExit;
         }
 
         public void AddTransition(GraphNode destination, float cost)
         {
             this.Transitions.Add(new Transition() { Destination = destination, Cost = cost });
+        }
+
+        public void RemoveTransition(GraphNode destination)
+        {
+            for (int i = Transitions.Count - 1; i >= 0; --i)
+            {
+                if (Transitions[i].Destination == destination)
+                    Transitions.RemoveAt(i);
+            }
+        }
+
+        public float GetCost(GraphNode destination)
+        {
+            foreach (Transition transition in Transitions)
+                if (transition.Destination == destination)
+                    return transition.Cost;
+            return float.PositiveInfinity;
         }
     }
 

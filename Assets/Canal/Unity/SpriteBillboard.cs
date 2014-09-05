@@ -7,7 +7,7 @@ namespace Canal.Unity
         public Transform facingRoot;
         public Transform rotationTarget;
 
-        void Update()
+        void LateUpdate()
         {
             Camera camera = Camera.main;
             Transform lookTarget = camera.transform;
