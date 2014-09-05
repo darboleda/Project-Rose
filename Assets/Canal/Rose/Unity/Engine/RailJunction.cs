@@ -8,14 +8,26 @@ namespace Canal.Rose.Unity.Engine
 {
     public class RailJunction : MapNode
     {
-        [SerializeField]
-        private MapNode previousNode;
+        [System.Serializable]
+        public struct RailJunctionPair
+        {
+            public MapNode entrance;
+            public MapNode exit;
+        }
 
-        [SerializeField]
-        private MapNode nextNode;
+        public RailJunctionPair[] junctions;
         
-        public override MapNode GetNextNode(MapNode from) { return nextNode; }
-        public override MapNode GetPreviousNode(MapNode from) { return previousNode; }
+        public override MapNode GetDefaultExit(MapNode entranceNode)
+        {
+            return junctions.FirstOrDefault(x => x.entrance == entranceNode).exit;
+        }
+        public override MapNode GetDefaultEntrance(MapNode exitNode)
+        {
+            return junctions.FirstOrDefault(x => x.exit == exitNode).entrance;
+        }
+
+        public override IEnumerable<MapNode> Entrances { get { return junctions.Select(x => x.entrance); } }
+        public override IEnumerable<MapNode> Exits { get { return junctions.Select(x => x.exit); } }
 
         public override Vector3 SampleMove(float start, float end, out float sampledEnd, out float leftoverDelta)
         {

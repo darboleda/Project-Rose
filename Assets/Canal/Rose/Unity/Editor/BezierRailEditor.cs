@@ -21,10 +21,10 @@ namespace Canal.Rose.Unity.Editor
             path = EditorGUILayout.ObjectField(path, typeof(BezierPath), true) as BezierPath;
             if (path != null)
             {
-                float newSample;
+                float newSample = 0;
                 if (rail.SegmentPoints == null)
                 {
-                    newSample = EditorGUILayout.Slider(rail.CurrentSample, 0, path.CurveCount);
+                    //newSample = EditorGUILayout.Slider(rail.CurrentSample, 0, path.CurveCount);
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace Canal.Rose.Unity.Editor
             Handles.color = Color.green;
 
             BezierPath path = rail.PathToBake;
-            if (rail.SegmentPoints == null && rail.SegmentPoints.Count > 1 && path != null)
+            if ((rail.SegmentPoints == null || rail.SegmentPoints.Count == 0) && path != null)
             {
                 Vector3 position;
                 int curveIndex = Mathf.FloorToInt(rail.CurrentSample);

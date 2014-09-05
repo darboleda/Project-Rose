@@ -8,8 +8,11 @@ namespace Canal.Rose.Unity.Engine
 {
     public abstract class MapNode : Behavior
     {
-        public abstract MapNode GetNextNode(MapNode from);
-        public abstract MapNode GetPreviousNode(MapNode from);
+        public abstract MapNode GetDefaultExit(MapNode entranceNode);
+        public abstract MapNode GetDefaultEntrance(MapNode exitNode);
+
+        public abstract IEnumerable<MapNode> Exits { get; }
+        public abstract IEnumerable<MapNode> Entrances { get; }
 
         public virtual Vector3 GetFacingDirection(float back, float front)
         {

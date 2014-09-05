@@ -16,8 +16,11 @@ namespace Canal.Rose.Unity.Engine
 
         public float length;
         
-        public override MapNode GetNextNode(MapNode from) { return nextNode; }
-        public override MapNode GetPreviousNode(MapNode from) { return previousNode; }
+        public override MapNode GetDefaultExit(MapNode entranceNode) { return nextNode; }
+        public override MapNode GetDefaultEntrance(MapNode exitNode) { return previousNode; }
+
+        public override IEnumerable<MapNode> Entrances { get { yield return previousNode; } }
+        public override IEnumerable<MapNode> Exits { get { yield return nextNode; } }
 
         public override Vector3 GetFacingDirection(float back, float front)
         {

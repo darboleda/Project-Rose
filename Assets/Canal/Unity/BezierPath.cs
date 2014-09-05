@@ -80,7 +80,7 @@ namespace Canal.Unity
             }
         }
 
-        //[HideInInspector]
+        [HideInInspector]
         [SerializeField]
         private List<BezierPoint> points = new List<BezierPoint>();
 

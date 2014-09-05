@@ -21,7 +21,7 @@ namespace Canal.Rose.Unity.Engine
                 sample = nodeToSample.SampleWorldMove(currentPosition, newPos, out currentPosition, out leftoverDelta);
                 if (leftoverDelta > 0.01f)
                 {
-                    MapNode newNode = nodeToSample.GetNextNode(previousNode);
+                    MapNode newNode = nodeToSample.GetDefaultExit(previousNode);
                     if (newNode == null) break;
                     previousNode = nodeToSample;
                     nodeToSample = newNode;
@@ -29,7 +29,7 @@ namespace Canal.Rose.Unity.Engine
                 }
                 else if (leftoverDelta < -0.01f)
                 {
-                    MapNode newNode = nodeToSample.GetPreviousNode(previousNode);
+                    MapNode newNode = nodeToSample.GetDefaultEntrance(previousNode);
                     if (newNode == null) break;
                     previousNode = nodeToSample;
                     nodeToSample = newNode;
