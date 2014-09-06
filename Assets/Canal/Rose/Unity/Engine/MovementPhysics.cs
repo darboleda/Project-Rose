@@ -28,6 +28,7 @@ namespace Canal.Rose.Unity.Engine
         private float currentSpeed = 0;
 
         private HashSet<Trigger> currentTriggers = new HashSet<Trigger>();
+        private Graph graph;
 
         public void FixedUpdate()
         {
@@ -50,7 +51,8 @@ namespace Canal.Rose.Unity.Engine
 
         public void ApplyVelocity()
         {
-            transform.position = Tracer.Move(currentSpeed * Time.deltaTime);
+            float previousPosition = Tracer.currentPosition;
+            this.UpdatePosition(currentSpeed * Time.deltaTime);
             Animator.SetFloat("hSpeed", currentSpeed);
             Animator.SetBool("Walking", Mathf.Abs(currentSpeed) > 0.5f);
 
@@ -61,6 +63,11 @@ namespace Canal.Rose.Unity.Engine
                 facing.Normalize();
                 FacingTarget.rotation = Quaternion.FromToRotation(Vector3.right, facing);
             }
+        }
+
+        protected virtual void UpdatePosition(float distance)
+        {
+            transform.position = Tracer.Move(distance);
         }
 
         public void CheckTriggers()

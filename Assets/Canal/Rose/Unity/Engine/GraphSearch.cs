@@ -133,6 +133,9 @@ namespace Canal.Rose.Unity.Engine
             start.AddTransition(mappedNodes[startNode].Entrance, startPosition);
             start.AddTransition(mappedNodes[startNode].Exit, startNode.GetWorldLength() - startPosition);
 
+            if (start.Source == end.Source)
+                start.AddTransition(end, Mathf.Abs(endPosition - startPosition));
+
             mappedNodes[endNode].Entrance.AddTransition(end, endPosition);
             mappedNodes[endNode].Exit.AddTransition(end, endNode.GetWorldLength() - endPosition);
 

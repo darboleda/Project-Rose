@@ -78,11 +78,11 @@ namespace Canal.Rose.Unity.Engine
                 if (leftoverDelta > 0.01f)
                 {
                     GraphNode nextNode = path.Pop();
-
-                    if (path.Any())
+                    do
                     {
+                        if (nextNode.Source != CurrentNode) break;
                         nextNode = path.Pop();
-                    }
+                    } while (path.Any());
                     CurrentNode = nextNode.Source;
                     currentPosition = (nextNode.isExit ? CurrentNode.GetWorldLength() : 0);
                 }

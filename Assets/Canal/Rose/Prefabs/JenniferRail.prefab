@@ -47,6 +47,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400008}
   - 114: {fileID: 11400010}
+  - 114: {fileID: 11400012}
   m_Layer: 0
   m_Name: JenniferRail
   m_TagString: Untagged
@@ -162,7 +163,7 @@ MonoBehaviour:
   WalkAcceleration: 10
   WalkSpeed: 4
   MomentumRatio: .600000024
-  Radius: 1
+  Radius: .5
   Animator: {fileID: 9500000}
   FacingTarget: {fileID: 400006}
   activateTriggers: 1
@@ -204,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f815fd4afb82d4ea790239e292ac53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPosition: 0
+  currentPosition: 5
   CurrentNode: {fileID: 0}
   FacingSampleDistance: .00100000005
 --- !u!114 &11400010
@@ -219,6 +220,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Physics: {fileID: 11400002}
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46497b398b6d36f41bd8ce226a7c1d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tracer: {fileID: 11400008}
+  WalkAcceleration: 10
+  WalkSpeed: 4
+  MomentumRatio: .600000024
+  Radius: .5
+  Animator: {fileID: 9500000}
+  FacingTarget: {fileID: 400006}
+  activateTriggers: 1
+  TargetNode: {fileID: 0}
+  TargetPosition: 2
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

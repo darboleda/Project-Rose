@@ -7,7 +7,7 @@ namespace Canal.Rose.Unity.Engine
 {
     public abstract class Tracer : Behavior {
         [SerializeField]
-        protected float currentPosition = 0;
+        public float currentPosition = 0;
 
         public abstract Vector3 Move(float distance);
         public abstract Vector3 GetFacingDirection(float direction);
