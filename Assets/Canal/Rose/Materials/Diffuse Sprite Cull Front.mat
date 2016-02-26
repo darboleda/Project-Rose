@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 3
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Diffuse Sprite Culled
-  m_Shader: {fileID: 4800000, guid: fdaf22fdc34937940ae03dbd2a630911, type: 3}
-  m_ShaderKeywords: []
-  m_CustomRenderQueue: -1
+  m_Name: Diffuse Sprite Cull Front
+  m_Shader: {fileID: 4800000, guid: 2b413c4570f274a4f860da3ef39e7432, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -24,7 +26,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .5
+        second: 0.5
       data:
         first:
           name: PixelSnap

@@ -20,11 +20,14 @@ namespace Canal.Rose.Unity.Engine
         {
             tracer = this.Tracer as MapTracer;
             graph = GraphSearch.GenerateGraph(tracer.CurrentNode);
+
+            if (TargetNode == null) return;
             path = graph.GeneratePath(tracer.CurrentNode, tracer.currentPosition, TargetNode, TargetPosition);
         }
 
         protected override void UpdatePosition(float distance)
         {
+            if (path == null) return;
             transform.position = tracer.FollowPath(distance, path, TargetNode, TargetPosition);
         }
     }

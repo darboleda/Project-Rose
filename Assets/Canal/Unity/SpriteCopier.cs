@@ -8,7 +8,7 @@ namespace Canal.Unity
         public SpriteRenderer spriteToCopy;
         public SpriteRenderer targetSprite;
 
-    	void Update()
+        void LateUpdate()
         {
             targetSprite.sprite = spriteToCopy.sprite;
         }

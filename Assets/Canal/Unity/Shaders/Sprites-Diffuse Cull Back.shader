@@ -1,8 +1,8 @@
-Shader "Sprites/Diffuse Two-sides"
+Shader "Sprites/Diffuse Cull Back"
 {
 	Properties
 	{
-		[PreRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
@@ -21,16 +21,17 @@ Shader "Sprites/Diffuse Two-sides"
 		Cull Back
 		Lighting Off
 		ZWrite Off
-		Fog { Mode Off }
 		Blend One OneMinusSrcAlpha
 
 		CGPROGRAM
-		#pragma surface surf Lambert vertex:vert
-		#pragma multi_compile DUMMY PIXELSNAP_ON
+		#pragma surface surf Lambert vertex:vert nofog keepalpha
+		#pragma multi_compile _ PIXELSNAP_ON
 
 		sampler2D _MainTex;
 		fixed4 _Color;
-		float4 _Normal;
+		sampler2D _AlphaTex;
+		float _AlphaSplitEnabled;
+
 
 		struct Input
 		{
@@ -40,32 +41,33 @@ Shader "Sprites/Diffuse Two-sides"
 		
 		void vert (inout appdata_full v, out Input o)
 		{
-			#if defined(PIXELSNAP_ON) && !defined(SHADER_API_FLASH)
+			#if defined(PIXELSNAP_ON)
 			v.vertex = UnityPixelSnap (v.vertex);
 			#endif
-			v.normal = float3(0, 0, -1);
 			
 			UNITY_INITIALIZE_OUTPUT(Input, o);
 			o.color = v.color * _Color;
 		}
 
+		fixed4 SampleSpriteTexture (float2 uv)
+		{
+			fixed4 color = tex2D (_MainTex, uv);
+
+#if UNITY_TEXTURE_ALPHASPLIT_ALLOWED
+			if (_AlphaSplitEnabled)
+				color.a = tex2D (_AlphaTex, uv).r;
+#endif //UNITY_TEXTURE_ALPHASPLIT_ALLOWED
+
+			return color;
+		}
+
 		void surf (Input IN, inout SurfaceOutput o)
 		{
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * IN.color;
+			fixed4 c = SampleSpriteTexture (IN.uv_MainTex) * IN.color;
 			o.Albedo = c.rgb * c.a;
 			o.Alpha = c.a;
 		}
 		ENDCG
-
-		// extra pass that renders to depth buffer only
-	    Pass {
-	        ZWrite On
-	        ColorMask 0
-	    }
-
-    	// paste in forward rendering passes from Transparent/Diffuse
-    	// UsePass "Transparent/Diffuse/FORWARD"
-		
 	}
 
 Fallback "Transparent/VertexLit"
